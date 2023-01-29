@@ -314,29 +314,29 @@ if (isset($_POST['btn-update-product'])) {
             }).get();
             // console.log(data);
             $('#product_id').val(data[0]);
-            $('#product_price').val(data[2]);
-            $('#product_name').val(data[3]);
-            $('#product_category').val(data[4]);
-            $('#product_color').val(data[5]);
-            $('#product_special_offer').val(data[6]);
-            $('#product_description').val(data[7]);
+            $('#product_price').val(data[5]);
+            $('#product_name').val(data[6]);
+            $('#product_category').val(data[7]);
+            $('#product_color').val(data[8]);
+            $('#product_special_offer').val(data[9]);
+            $('#product_description').val(data[10]);
          });
 
-         $('.btn-edit-product-image').on('click', function () {
-            $('#edit-product-image-modal').modal('show');
+         // $('.btn-edit-product-image').on('click', function () {
+         //    $('#edit-product-image-modal').modal('show');
 
-            $tr = $(this).closest("tr");
-            var data = $tr.children("td").map(function () {
-               return $(this).text();
-            }).get();
-            // console.log(data);
-            $('#product_img_id').val(data[0]);
-            $('#product_img_name').val(data[6]);
-            $('#product_img_image1').val(data[2]);
-            $('#product_img_image2').val(data[3]);
-            $('#product_img_image3').val(data[4]);
-            // $('#product_img_image4').val(data[5]);
-         });
+         //    $tr = $(this).closest("tr");
+         //    var data = $tr.children("td").map(function () {
+         //       return $(this).text();
+         //    }).get();
+         //    // console.log(data);
+         //    $('#product_img_id').val(data[0]);
+         //    $('#product_img_name').val(data[6]);
+         //    $('#product_img_image1').val(data[2]);
+         //    $('#product_img_image2').val(data[3]);
+         //    $('#product_img_image3').val(data[4]);
+         //    // $('#product_img_image4').val(data[5]);
+         // });
       });
    </script>
 </body>
