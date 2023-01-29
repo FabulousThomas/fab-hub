@@ -1,0 +1,1 @@
+INSERT INTO `products`( `product_name`, `product_category`, `product_description`, `product_image`, `product_image2`, `product_image3`, `product_image4`, `product_price`, `product_special_offer`, `product_color`) VALUES ('Brown Coat','coats','Awesome brown coat','coat-1.webp','coat-1.webp','coat-1.webp','coat-1.webp','231.8','0','Brown');
