@@ -50,8 +50,8 @@ if (isset($_GET['product_id']) && $_GET['product_tag']) {
                     <h6 class="pt-2 text-uppercase">Shop &ndash; <?= $row['product_tag'] ?></h6>
                     <h3 class="py-2"><?= $row['product_name'] ?></h3>
                     <h2 class="d-inline-block">$ <?= $row['product_price'] ?> </h2> <?php if (isset($row) && $row['product_special_offer'] != 0) : ?>
-                            <small class="text-danger"> &dash; <?=$row['product_special_offer'].'% off sales'?></small>
-                            <?php endif; ?>
+                        <small class="text-danger"> &dash; <?= $row['product_special_offer'] . '% off sales' ?></small>
+                    <?php endif; ?>
 
                     <form action="cart.php" method="POST" class="cart-form">
                         <input type="hidden" name="product_id" value="<?= $row['product_id'] ?>">
@@ -81,49 +81,49 @@ if (isset($_GET['product_id']) && $_GET['product_tag']) {
         </div>
 
         <div class="row mx-auto container-fluid">
-            <?php 
-                if(isset($_GET['product_tag'])) {
-                    $product_tag = mysqli_real_escape_string($conn, $_GET['product_tag']);
+            <?php
+            if (isset($_GET['product_tag'])) {
+                $product_tag = mysqli_real_escape_string($conn, $_GET['product_tag']);
 
                 $stmt = $conn->prepare("SELECT * FROM products WHERE product_tag = '$product_tag' ORDER BY product_id DESC LIMIT 6");
                 $stmt->execute();
                 $tag = $stmt->get_result();
-                }
+            }
             ?>
-            <?php foreach($tag as $row) : ?>
+            <?php foreach ($tag as $row) : ?>
                 <div onclick="window.location.href='single_product.php?product_id=<?= $row['product_id'] ?>&product_tag=<?= $row['product_tag'] ?>';" class="product text-center col-lg-2 col-md-3 col-sm-4 col-6 position-relative">
-                    <?php if(isset($row) && $row['product_special_offer'] != 0) : ?>
-                    <div class="position-absolute top-25 start-0 badge rounded bg-danger p-2 discount">
-                        <small class="m-0"><?= $row['product_special_offer'] ?>% Off</small>
-                    </div>
+                    <?php if (isset($row) && $row['product_special_offer'] != 0) : ?>
+                        <div class="position-absolute top-25 start-0 badge rounded bg-danger p-2 discount">
+                            <small class="m-0"><?= $row['product_special_offer'] ?>% Off</small>
+                        </div>
                     <?php endif ?>
                     <div class="image-container">
                         <img src="assets/img/<?= $row['product_image'] ?>" alt="" class="img-fluid w-100 img-small">
-                        </div>
-                        <div class="star">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <h5 class="p-name"><?= $row['product_name'] ?></h5>
-                        <h5 class="p-price" style="font-weight: bolder;">$<?= $row['product_price'] ?></h5>
-                        <button class="buy-btn" onclick="window.location.href='single_product.php?product_id=<?= $row['product_id'] ?>&product_tag=<?= $row['product_tag'] ?>';">Buy Now</button>
                     </div>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h5 class="p-name"><?= $row['product_name'] ?></h5>
+                    <h5 class="p-price" style="font-weight: bolder;">$<?= $row['product_price'] ?></h5>
+                    <button class="buy-btn" onclick="window.location.href='single_product.php?product_id=<?= $row['product_id'] ?>&product_tag=<?= $row['product_tag'] ?>';">Buy Now</button>
+                </div>
             <?php endforeach; ?>
         </div>
 
-        <?php if(isset($tag) && $tag >= $tag) : ?>
-                <a href="related_products.php?product_tag=<?= $row['product_tag'] ?>" class="btn btn-outline-dark btn-sm w-25 ms-2">See more</a>
-                <?php endif; ?>
-                
+        <?php if (isset($tag) && $tag >= $tag) : ?>
+            <a href="related_products.php?product_tag=<?= $row['product_tag'] ?>" class="btn btn-outline-dark btn-sm w-25 ms-2">See more</a>
+        <?php endif; ?>
+
     </section>
 
     <!-- FOOTER -->
     <?php include "inc/footer.php" ?>
 
-    <SCript>
+    <script>
         var mainImg = document.getElementById("mainImg");
         var smallImg = document.getElementsByClassName("small-img");
 
@@ -132,7 +132,7 @@ if (isset($_GET['product_id']) && $_GET['product_tag']) {
                 mainImg.src = smallImg[i].src;
             }
         }
-    </SCript>
+    </script>
 </body>
 
 </html>
