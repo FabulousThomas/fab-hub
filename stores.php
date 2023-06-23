@@ -21,9 +21,11 @@
          <hr class="mx-auto"> -->
          <!-- <hr class="w-100"> -->
          <div class="border-bottom d-flex align-items-center justify-content-between">
-            <p class="mb-0">Stores</p>
+            <h4 class="mb-0">Stores/Shops</h4>
             <form action="" method="POST">
-               
+               <div class="form-group mb-1">
+                  <input type="search" name="search-store" class="form-control shadow-none py-1 border rounded-0" placeholder="serach here...">
+               </div>
             </form>
          </div>
          <div class="row mx-0 mt-5">
