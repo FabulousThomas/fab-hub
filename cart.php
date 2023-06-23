@@ -38,7 +38,7 @@ if (isset($_POST['add_to_cart'])) {
     // Calculate Cart Total
     calculateCartTotal();
 
-// Remove product from cart
+    // Remove product from cart
 } elseif (isset($_POST['remove_product'])) {
     unset($_SESSION['cart'][$_POST['product_id']]);
     echo "<script>alert('Product removed from cart')</script>";
@@ -74,21 +74,25 @@ function calculateCartTotal()
         $qty = $product['product_qty'];
         $product_offer = $product['product_special_offer'];
 
+        $total = $total + ($price * $qty);
+        $total_offer = $total_offer + ($product_offer * $price * $qty) / 100;
         $total_qty = $total_qty + $qty;
         $total_price = $price * $qty;
-
-        $total = $total + ($price * $qty);
-        $total_offer = $total_offer + $total;
-        $product_offer_percentage = ($product_offer * $price * $qty) / 100;
+        $total_product_offer = ($product_offer * $price * $qty) / 100;
+        // $offer_total = $offer_total + $total_product_offer;
+        $sum_total = $price + $total_offer;
     }
 
+    $_SESSION['total'] = $total;
+    $_SESSION['sum_total'] = $sum_total;
+    $_SESSION['total_offer'] = $total_offer;
     $_SESSION['total_qty'] = $total_qty;
     $_SESSION['total_price'] = $total_price;
-
-    $_SESSION['total'] = $total;
-    $_SESSION['total_offer'] = $total_offer;
-    $_SESSION['product_offer_percentage'] = $product_offer_percentage;
+    $_SESSION['total_product_offer'] = $total_product_offer;
+    // $_SESSION['offer_total'] = $offer_total;
+    // die($total_product_offer);
 }
+
 
 ?>
 
@@ -118,19 +122,19 @@ function calculateCartTotal()
                                 <div>
                                     <p class="mb-0"><?= $value['product_name'] ?></p>
                                     <?php if ($value['product_special_offer']) : ?>
-                                    <small class="font-weight-bold"><span>$</span><?= $_SESSION['product_offer_percentage'] ?>
-                                    <?php else : ?>
-                                        <small class="font-weight-bold"><span>$</span><?= $value['product_price'] ?>
-                                        <?php endif; ?>
-                                    <?php if(isset($value) && $value['product_special_offer'] > 0) : ?>
-                        <small class="m-0 text-danger"> &dash; <?= $value['product_special_offer'] ?>% Off sales</small>
-                    <?php endif ?>
-                                </small>
-                                    <br>
-                                    <form action="cart.php" method="POST">
-                                        <input type="hidden" name="product_id" value="<?= $value['product_id'] ?>">
-                                        <input type="submit" name="remove_product" class="btn-orange-outline" title="Remove" value="Remove">
-                                    </form>
+                                        <small class="font-weight-bold"><span>$</span><?= $_SESSION['total_product_offer'] ?>
+                                        <?php else : ?>
+                                            <small class="font-weight-bold"><span>$</span><?= $value['product_price'] ?>
+                                            <?php endif; ?>
+                                            <?php if (isset($value) && $value['product_special_offer'] > 0) : ?>
+                                                <small class="m-0 text-danger"> &dash; <?= $value['product_special_offer'] ?>% Off sales</small>
+                                            <?php endif ?>
+                                            </small>
+                                            <br>
+                                            <form action="cart.php" method="POST">
+                                                <input type="hidden" name="product_id" value="<?= $value['product_id'] ?>">
+                                                <input type="submit" name="remove_product" class="btn-orange-outline" title="Remove" value="Remove">
+                                            </form>
                                 </div>
                             </div>
                         </td>
@@ -143,8 +147,8 @@ function calculateCartTotal()
                         </td>
                         <td>
                             <span>$</span>
-                            <?php if($value['product_special_offer']) : ?>
-                                    <span class="product-price"><?= ($value['product_special_offer'] * $value['product_price'] * $value['product_qty'])/100 ?></span>
+                            <?php if ($value['product_special_offer']) : ?>
+                                <span class="product-price"><?= ($value['product_special_offer'] * $value['product_price'] * $value['product_qty']) / 100 ?></span>
                             <?php else : ?>
                                 <span class="product-price"><?= $value['product_price'] * $value['product_qty'] ?></span>
                             <?php endif; ?>
@@ -177,11 +181,7 @@ function calculateCartTotal()
                         </tr> -->
                         <tr>
                             <td>Total</td>
-                            <?php if($value) : ?>
-                                <td>$ <?= $_SESSION['total']; ?></td>
-                                <?php else : ?>
-                                    <td>$ <?= $_SESSION['product_offer_percentage']; ?></td>
-                            <?php endif; ?>
+                            <td>$ <?= $_SESSION['total']; ?></td>
                         </tr>
                     </table>
                 </div>
